@@ -1,11 +1,22 @@
 import StatsVertical from '@components/widgets/stats/StatsVertical'
 import {Eye} from 'react-feather'
 import TablaPerfilCliente from './TablaPerfilCliente'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function PerfilCliente({clienteSeleccionado}){
+
+    const [ultimaEvolucion, setUltimaEvolucion] = useState({})
+
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/ultima-evolucion/${clienteSeleccionado.data.data.usuario_id}`)
+        .then(res => setUltimaEvolucion(res.data))
+    }, [])
+
+
     return(
         <div style={{display: 'flex', gap: '1rem'}}>
-            <div style={{display: 'flex', flexDirection: 'column', width: '30rem', border: '1px solid black'}}>
+            <div style={{display: 'flex', flexDirection: 'column', width: '30rem', }}>
                 <div style={{display: 'flex', flexDirection: 'column', gap: '.25rem'}}>
                     <h4 style={{textAlign: 'center', fontSize: '2rem'}}>{clienteSeleccionado.data.data.nombre} {clienteSeleccionado.data.data.apellido}</h4>
                     <div style={{display: "flex"}}>
@@ -53,13 +64,13 @@ export default function PerfilCliente({clienteSeleccionado}){
 
             </div>
 
-            <div style={{width: '70rem', border: '1px solid black', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div style={{width: '70rem',  overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <div style={{display: 'flex', justifyContent: 'center', gap: '1rem'}}>
-                    <StatsVertical icon={<Eye size={21} />} color='info' stats='36.9k' statTitle='Peso Actual' />
-                    <StatsVertical icon={<Eye size={21} />} color='info' stats='36.9k' statTitle='% Grasa Actual' />
-                    <StatsVertical icon={<Eye size={21} />} color='info' stats='36.9k' statTitle='Peso Ideal' />
-                    <StatsVertical icon={<Eye size={21} />} color='info' stats='36.9k' statTitle='% Grasa Ideal' />
-                    <StatsVertical icon={<Eye size={21} />} color='info' stats='36.9k' statTitle='% Masa Muscular Ideal' />
+                    <StatsVertical icon={<Eye size={21} />} color='info' stats={ultimaEvolucion?.peso} statTitle='Peso Actual' />
+                    <StatsVertical icon={<Eye size={21} />} color='info' stats={ultimaEvolucion?.p_grasa} statTitle='% Grasa Actual' />
+                    <StatsVertical icon={<Eye size={21} />} color='info' stats={clienteSeleccionado.data.data.peso_ideal} statTitle='Peso Ideal' />
+                    <StatsVertical icon={<Eye size={21} />} color='info' stats={clienteSeleccionado.data.data.p_grasa_ideal} statTitle='% Grasa Ideal' />
+                    <StatsVertical icon={<Eye size={21} />} color='info' stats={clienteSeleccionado.data.data.p_masa_muscular} statTitle='% Masa Muscular Ideal' />
                 </div>
 
                 <TablaPerfilCliente clienteSeleccionado={clienteSeleccionado}/>

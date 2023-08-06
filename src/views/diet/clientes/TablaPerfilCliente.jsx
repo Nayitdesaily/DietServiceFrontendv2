@@ -6,7 +6,8 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import Evolucion from "./TablaPerfilCliente/Evolucion";
 import { Button, Spinner } from "reactstrap";
-import ModalCrearEvolucion from "./TablaPerfilCliente/ModalCrearEvolucion";
+import Estado from "./TablaPerfilCliente/Estado";
+import Dieta from "./TablaPerfilCliente/Dieta";
 
 export default function TablaPerfilCliente({clienteSeleccionado}) {
   const [value, setValue] = useState(0);
@@ -68,20 +69,20 @@ export default function TablaPerfilCliente({clienteSeleccionado}) {
         </Tabs>
 
         <TabPanel value={value} index={0}>
-          Item One
+          <Estado clienteSeleccionado={clienteSeleccionado} />
         </TabPanel>
         <TabPanel value={value} index={1} >
                 <Button type="submit" onClick={(event) => {event.preventDefault(); toggle() }}>Nueva Evolucion</Button>
                 <br />
                 <br />
-                <Evolucion clienteSeleccionado={clienteSeleccionado} />
+                <Evolucion clienteSeleccionado={clienteSeleccionado} toggle={toggle} modal={modal} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          <Dieta clienteSeleccionado={clienteSeleccionado} />
         </TabPanel>
 
       </Box>
-      <ModalCrearEvolucion toggle={toggle} modal={modal}/>
+      
 
     </div>
   );

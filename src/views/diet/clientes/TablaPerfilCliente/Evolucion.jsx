@@ -2,15 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Button, Spinner } from "reactstrap";
+import ModalCrearEvolucion from "./ModalCrearEvolucion";
 
-export default function Evolucion({clienteSeleccionado}){
+export default function Evolucion({clienteSeleccionado, toggle, modal}){
 
     const [evolucion, setEvolucion] = useState([]);
     const [pending, setPending] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
-          await axios.get("http://localhost:8000/api/evolucion/6616").then((res) => {
+          await axios.get(`http://localhost:8000/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`).then((res) => {
             setEvolucion(res.data.data);
           });
           setPending(false);
@@ -98,7 +99,7 @@ export default function Evolucion({clienteSeleccionado}){
             progressComponent={<Spinner>Loading...</Spinner>}
             />
             </div>
-            
+            <ModalCrearEvolucion clienteSeleccionado={clienteSeleccionado} toggle={toggle} modal={modal} setEvolucion={setEvolucion}/>
         </div>
     )
 }

@@ -1,6 +1,7 @@
 {
   "name": "vuexy-react-admin-dashboard",
   "version": "9.0.0",
+  "homepage": "https://app.dietservice.pe/",
   "private": true,
   "dependencies": {
     "@casl/ability": "^6.3.2",
@@ -142,7 +143,7 @@
     "postcss-custom-properties": {
       "postcss": "^8.2"
     },
-    "@esbuild-plugins/node-globals-polyfill": {
+    "@esbuild-plugins/ -globals-polyfill": {
       "esbuild": "^0.15.15"
     }
   },
