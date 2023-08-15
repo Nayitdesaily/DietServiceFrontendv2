@@ -1,7 +1,7 @@
 {
   "name": "vuexy-react-admin-dashboard",
   "version": "9.0.0",
-  "homepage": "https://app.dietservice.pe/",
+  "homepage": "https://app.dietservice.pe",
   "private": true,
   "dependencies": {
     "@casl/ability": "^6.3.2",
