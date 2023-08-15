@@ -28,7 +28,6 @@ import Spinner from './@core/components/spinner/Fallback-spinner'
 import './@core/components/ripple-button'
 
 // ** Fake Database
-// import './@fake-db'
 
 // ** PrismJS
 import 'prismjs'
