@@ -30,7 +30,7 @@ export default function Estado({clienteSeleccionado}) {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`http://localhost:8000/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`)
+        .get(`https://dietservice.bitjoins.pe/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`)
         .then((res) => {
           setEvolucion(res.data.data);
         });

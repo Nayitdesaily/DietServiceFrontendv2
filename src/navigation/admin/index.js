@@ -18,9 +18,15 @@ import { faAppleWhole, faPersonRunning, faUtensils, faClipboardList } from '@for
 export default [
     {
       id: 'cliente',
-      title: 'cliente',
+      title: 'Cliente',
       icon: <PieChart size={20} />,
       navLink: '/clientes'
+    },
+    {
+      id: 'historico-plan-dietetico',
+      title: 'Historico Plan Dietetico',
+      icon: <PieChart size={20} />,
+      navLink: '/historico-plan-dietetico'
     }
 ];
 

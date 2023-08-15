@@ -16,7 +16,7 @@ export default function PlanDia() {
 
   useEffect(() => {
     async function GetDietaHoy() {
-      await axios.get(`http://localhost:8000/api/plan-alimentacion-web/dieta-of-today/${idPlan}`).then((res) => {
+      await axios.get(`https://dietservice.bitjoins.pe/api/plan-alimentacion-web/dieta-of-today/${idPlan}`).then((res) => {
         setDieta(res.data.data);
       });
     }

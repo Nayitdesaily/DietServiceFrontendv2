@@ -26,8 +26,8 @@ export default function FueraDeCasa() {
 
   useEffect(() => {
     async function getData() {
-      await axios.get("http://localhost:8000/api/categorias-chef").then((res) => setCategoria(res.data.data));
-      await axios.get("http://localhost:8000/api/chefs").then((res) => setRestaurantes(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/categorias-chef").then((res) => setCategoria(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/chefs").then((res) => setRestaurantes(res.data.data));
     }
     getData();
   }, []);

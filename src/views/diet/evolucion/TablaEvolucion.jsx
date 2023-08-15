@@ -18,7 +18,7 @@ export default function TablaEvolucion() {
 
   useEffect(() => {
     async function fetchData() {
-      await axios.get("http://localhost:8000/api/evolucion/6616").then((res) => {
+      await axios.get("https://dietservice.bitjoins.pe/api/evolucion/6616").then((res) => {
         setEvolucion(res.data.data);
         console.log(res.data.data);
       });

@@ -24,7 +24,7 @@ export default function ModalCrearEvolucion({ modal, toggle, clienteSeleccionado
   const [registroTexto, setRegistroTexto] = useState("Registrar")
 
   async function CrearEvolucion(data) {
-    await axios.post("http://localhost:8000/api/evolucion/create", data)
+    await axios.post("https://dietservice.bitjoins.pe/api/evolucion/create", data)
     .then(res => {
       if(res.status == 200){
         setRegistroExitoso(true)
@@ -33,7 +33,7 @@ export default function ModalCrearEvolucion({ modal, toggle, clienteSeleccionado
   }
 
   async function ConseguirEvoluciones() {
-    await axios.get(`http://localhost:8000/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`).then((res) => {
+    await axios.get(`https://dietservice.bitjoins.pe/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`).then((res) => {
       setEvolucion(res.data.data);
     });
   }

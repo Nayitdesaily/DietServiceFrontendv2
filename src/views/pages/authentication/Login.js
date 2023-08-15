@@ -131,7 +131,7 @@ const Login = () => {
 
   const onSubmit = async(data) => {
     if (Object.values(data).every(field => field.length > 0)) {
-      await axios.post("http://localhost:8000/api/usuario/login", { email: data.loginEmail, pass: data.password })
+      await axios.post("https://dietservice.bitjoins.pe/api/usuario/login", { email: data.loginEmail, pass: data.password })
       .then(res => {
 
         if(res.data.message == "Usuario ingreso correctamente"){

@@ -7,7 +7,7 @@ export default function ModalResaturantes({ modal, toggle, restauranteSelecciona
 
   useEffect(() => {
     async function getData() {
-      await axios.get("http://localhost:8000/api/platos").then((res) => SetPlatos(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/platos").then((res) => SetPlatos(res.data.data));
     }
     getData();
   }, []);

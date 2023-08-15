@@ -7,12 +7,20 @@ import axios from 'axios'
 export default function PerfilCliente({clienteSeleccionado}){
 
     const [ultimaEvolucion, setUltimaEvolucion] = useState({})
+    const [consultorio, setConsultorio] = useState({});
+    const [empresas, setEmpresas] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/ultima-evolucion/${clienteSeleccionado.data.data.usuario_id}`)
+        axios.get(`https://dietservice.bitjoins.pe/api/ultima-evolucion/${clienteSeleccionado?.data.data.usuario_id}`)
         .then(res => setUltimaEvolucion(res.data))
+        axios.get("https://dietservice.bitjoins.pe/api/consultorios").then((res) => {
+            const consultorio = res.data.filter(consultorio => consultorio?.id === clienteSeleccionado?.data.data.consultorio_id);   
+            setConsultorio(consultorio)});
+        axios.get("https://dietservice.bitjoins.pe/api/empresas").then((res) => setEmpresas(res.data));
+
     }, [])
 
+    console.log(consultorio)
 
     return(
         <div style={{display: 'flex', gap: '1rem'}}>

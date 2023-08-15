@@ -22,9 +22,9 @@ export default function Recetario() {
 
   useEffect(() => {
     async function getData() {
-      await axios.get("http://localhost:8000/api/categorias").then((res) => setCategoria(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/categorias").then((res) => setCategoria(res.data.data));
 
-      await axios.get("http://localhost:8000/api/recetas").then((res) => setRecetas(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/recetas").then((res) => setRecetas(res.data.data));
     }
 
     getData();

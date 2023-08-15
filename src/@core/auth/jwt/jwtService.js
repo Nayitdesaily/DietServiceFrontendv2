@@ -94,7 +94,6 @@ export default class JwtService {
 
   login(...args) {
     return axios.post(this.jwtConfig.loginEndpoint, ...args)
-    // return axios.post('http://localhost:8000/api/usuario/login', ...args)
   }
 
   register(...args) {

@@ -15,7 +15,7 @@ export default () => {
       port: 3000,
       proxy: 'https://pixinvent.com/',
       cors: {
-        origin: ['https://pixinvent.com/', 'http://localhost:3000', 'http://localhost:8000'],
+        origin: ['https://pixinvent.com/', 'http://localhost:3000', 'https://dietservice.bitjoins.pe', 'http://localhost:8000'],
         methods: ['GET', 'PATCH', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
       }

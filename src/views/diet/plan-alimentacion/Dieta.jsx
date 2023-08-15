@@ -7,12 +7,12 @@ export default function Dieta() {
   const [dietas, setDietas] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/plan_alimentacion/last/6616").then((res) => setPlanActual(res.data.data));
+    axios.get("https://dietservice.bitjoins.pe/api/plan_alimentacion/last/6616").then((res) => setPlanActual(res.data.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/plan-alimentacion/dietas/${planActual.id}`)
+      .get(`https://dietservice.bitjoins.pe/api/plan-alimentacion/dietas/${planActual.id}`)
       .then((res) => setDietas(res.data.data));
   }, [planActual]);
 

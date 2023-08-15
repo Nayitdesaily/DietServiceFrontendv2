@@ -13,9 +13,9 @@ export default function EditarClientes({ clienteSeleccionado }) {
 
   useEffect(() => {
     async function fetchData() {
-      await axios.get("http://localhost:8000/api/tipo-usuario").then((res) => setTiposUsuario(res.data));
-      await axios.get("http://localhost:8000/api/consultorios").then((res) => setConsultorios(res.data));
-      await axios.get("http://localhost:8000/api/empresas").then((res) => setEmpresas(res.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/tipo-usuario").then((res) => setTiposUsuario(res.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/consultorios").then((res) => setConsultorios(res.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/empresas").then((res) => setEmpresas(res.data));
     }
     fetchData();
   }, []);
@@ -29,7 +29,7 @@ export default function EditarClientes({ clienteSeleccionado }) {
   function onSubmit(data) {
     async function ActualizarCliente() {
       await axios
-        .put(`http://localhost:8000/api/web/personas/${clienteSeleccionado.data.data.id}`, data)
+        .put(`https://dietservice.bitjoins.pe/api/web/personas/${clienteSeleccionado.data.data.id}`, data)
         .then((res) => {
           if (res.status === 200) {
             toast(

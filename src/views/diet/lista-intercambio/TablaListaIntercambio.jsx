@@ -61,7 +61,7 @@ export default function TablaListaIntercambio(){
 
     useEffect(() => {
         async function fetchData() {
-            await axios.get("http://localhost:8000/api/intercambios").
+            await axios.get("https://dietservice.bitjoins.pe/api/intercambios").
             then((res) => {
                 let categorias = res.data?.map(objeto => objeto.categoria);
                 categorias = [...new Set(categorias)];
@@ -74,7 +74,7 @@ export default function TablaListaIntercambio(){
 
     useEffect(() => {
         async function fetchData() {
-            await axios.get("http://localhost:8000/api/intercambios").
+            await axios.get("https://dietservice.bitjoins.pe/api/intercambios").
             then((res) => {setIntercambios(res.data); console.log(res.data)});
             setPending(false);
         }

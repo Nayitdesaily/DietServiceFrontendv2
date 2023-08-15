@@ -15,14 +15,14 @@ export default function TablaClientes({ setTab, setClienteSeleccionado }) {
 
    useEffect(() => {
       async function fetchData() {
-         await axios.get("http://localhost:8000/api/web/personas").then((res) => {setClientes(res.data.data)});
+         await axios.get("https://dietservice.bitjoins.pe/api/web/personas").then((res) => {setClientes(res.data.data)});
          setPending(false);
       }
       fetchData();
    }, []);
 
    async function enviarEditarCliente(id) {
-      await axios.get(`http://localhost:8000/api/web/personas/${id}`).then((res) => {
+      await axios.get(`https://dietservice.bitjoins.pe/api/web/personas/${id}`).then((res) => {
          setClienteSeleccionado(res);
          if (res.status === 200) {
             setTab("edicion");
@@ -31,7 +31,7 @@ export default function TablaClientes({ setTab, setClienteSeleccionado }) {
    }
 
    async function EnviarAPerfil(id) {
-      await axios.get(`http://localhost:8000/api/web/personas/${id}`).then((res) => {
+      await axios.get(`https://dietservice.bitjoins.pe/api/web/personas/${id}`).then((res) => {
          setClienteSeleccionado(res);
          if (res.status === 200) {
             setTab("perfil");

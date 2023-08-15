@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Evolucion from "./Evolucion";
-import { useSelector } from "react-redux";
 import PlanDia from "./PlanDia";
 import mock from "../../../@fake-db/mock";
 import axios from "axios";
@@ -26,11 +25,9 @@ const Dashboard = () => {
       
    }, [evolution]);
 
-   console.log(evolution)
-
    useEffect(() => {
       async function fetchData() {
-        await axios.get("http://localhost:8000/api/evolucion/6616").then((res) => {
+        await axios.get("https://dietservice.bitjoins.pe/api/evolucion/6616").then((res) => {
           setEvolution(res.data.data);
         });
         setPending(false);

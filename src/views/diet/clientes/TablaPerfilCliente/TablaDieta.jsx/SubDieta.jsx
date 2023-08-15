@@ -6,18 +6,11 @@ export default function SubDieta({ clienteSeleccionado }) {
   const [planActual, setPlanActual] = useState({});
   const [dietas, setDietas] = useState([]);
   const [opcion, setOpcion] = useState(1);
-  const [tips, setTips] = useState([]);
-  const [nota, setNota] = useState([]);
   const [pending, setPending] = useState(false);
-
-  function quitarTips(texto) {
-    const lineas = texto?.split("\n");
-    return lineas;
-  }
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/plan_alimentacion/last/${clienteSeleccionado?.data?.data.usuario_id}`)
+      .get(`https://dietservice.bitjoins.pe/api/plan_alimentacion/last/${clienteSeleccionado?.data?.data.usuario_id}`)
       .then((res) => setPlanActual(res.data.data));
 
     if(dietas.length == 0){
@@ -26,19 +19,14 @@ export default function SubDieta({ clienteSeleccionado }) {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/plan-alimentacion/dietas/${planActual.id}`).then((res) => {
+    axios.get(`https://dietservice.bitjoins.pe/api/plan-alimentacion/dietas/${planActual?.id}`).then((res) => {
       setDietas(res.data.data);
       setPending(true)
 
     });
-
-    setTips(quitarTips(planActual?.tips));
-
   }, [planActual]);
 
   useEffect(() => {}, [opcion]);
-
-
 
   return (
     <div>
@@ -88,41 +76,7 @@ export default function SubDieta({ clienteSeleccionado }) {
                 ))
               )}
           </div>
-          <div style={{ display: "flex" }}>
-            <Card
-              className="my-2"
-              style={{
-                width: "24rem",
-              }}
-            >
-              <CardHeader></CardHeader>
-              <CardBody>
-                <CardTitle tag="h5" style={{ fontWeight: "bold" }}>
-                  Tips
-                </CardTitle>
-                <CardText>
-                  {tips?.map((tip) => (
-                    <p>{tip}</p>
-                  ))}
-                </CardText>
-              </CardBody>
-            </Card>
-
-            <Card
-              className="my-2"
-              style={{
-                width: "25rem",
-              }}
-            >
-              <CardHeader></CardHeader>
-              <CardBody>
-                <CardTitle tag="h5" style={{ fontWeight: "bold" }}>
-                  Notas
-                </CardTitle>
-                <CardText>{planActual.notas}</CardText>
-              </CardBody>
-            </Card>
-          </div>
+          
         </div>
       )}
     </div>

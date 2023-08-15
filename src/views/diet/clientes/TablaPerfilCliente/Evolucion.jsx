@@ -11,7 +11,7 @@ export default function Evolucion({clienteSeleccionado, toggle, modal}){
 
     useEffect(() => {
         async function fetchData() {
-          await axios.get(`http://localhost:8000/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`).then((res) => {
+          await axios.get(`https://dietservice.bitjoins.pe/api/evolucion/${clienteSeleccionado?.data?.data?.usuario_id}`).then((res) => {
             setEvolucion(res.data.data);
           });
           setPending(false);

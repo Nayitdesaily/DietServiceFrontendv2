@@ -18,9 +18,9 @@ export default function Entrenamiento() {
 
   useEffect(() => {
     async function getData() {
-      await axios.get("http://localhost:8000/api/canal_videos").then((res) => setVideos(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/canal_videos").then((res) => setVideos(res.data.data));
 
-      await axios.get("http://localhost:8000/api/canal_tags").then((res) => setTags(res.data.data));
+      await axios.get("https://dietservice.bitjoins.pe/api/canal_tags").then((res) => setTags(res.data.data));
     }
     getData();
   }, []);

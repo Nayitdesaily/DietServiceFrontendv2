@@ -31,7 +31,7 @@ const Evolucion = ({ lastEvolution }) => {
 
    useEffect(() => {
       async function fetchData() {
-        await axios.get("http://localhost:8000/api/evolucion/6616").then((res) => {
+        await axios.get("https://dietservice.bitjoins.pe/api/evolucion/6616").then((res) => {
           setEvolutions(res.data.data);
         });
         setPending(false);
