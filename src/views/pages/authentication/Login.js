@@ -172,7 +172,7 @@ const Login = () => {
           console.log(usuario)
 
         } else {
-          console.log("error")
+          console.log(res)
         }
       })
       // .catch(err => setError('loginEmail', {
