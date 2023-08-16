@@ -8,7 +8,7 @@ export default function Planes() {
   const user = getUserData();
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/plan_alimentacion/usuario/web/${user.id}`).then((res) => setPlanes(res.data));
+    axios.get(`https://dietservice.bitjoins.pe/api/plan_alimentacion/usuario/web/${user.id}`).then((res) => setPlanes(res.data));
   }, []);
 
   return (
@@ -19,7 +19,6 @@ export default function Planes() {
         justifyContent: "center",
         alignItems: "flex-start",
         gap: "1rem",
-        marginLeft: "20%",
       }}
     >
       {planes?.map((plan, index) => (
@@ -33,9 +32,10 @@ export default function Planes() {
             backgroundColor: "#E09540",
             color: "white",
             fontWeight: "700",
-            minWidth: "30rem",
+            minWidth: "50rem",
             borderRadius: "1rem",
             boxShadow: "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
+            textAlign: 'center'
           }}
         >
           {plan.plan}

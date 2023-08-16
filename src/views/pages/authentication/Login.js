@@ -50,8 +50,12 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
 import axios from "axios";
+import { getUserData } from "../../../utility/Utils";
 
 const ToastContent = ({ t, name, role }) => {
+
+  const user = getUserData()
+
   return (
     <div className="d-flex">
       <div className="me-1">
@@ -62,7 +66,7 @@ const ToastContent = ({ t, name, role }) => {
           <h6>{name}</h6>
           <X size={12} className="cursor-pointer" onClick={() => toast.dismiss(t.id)} />
         </div>
-        <span>You have successfully logged in as an {role} user to Vuexy. Now you can start to explore. Enjoy!</span>
+        <span>Bienvenido {user.persona_id.nombre}, un gusto tener otra vez por aquí esperamos que tu experiencia sea la ¡mejor!</span>
       </div>
     </div>
   );
@@ -356,7 +360,9 @@ const Login = () => {
             </div>
             <div className="auth-footer-btn d-flex justify-content-center">
               <Button color="facebook">
-                <Facebook size={14} />
+                <a href={'https://www.facebook.com/DietService/'} target="_blank" style={{color: 'white'}}>
+                  <Facebook size={14} />
+                </a>
               </Button>
             </div>
           </Col>

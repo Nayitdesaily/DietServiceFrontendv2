@@ -38,7 +38,7 @@ export default function PlanDia() {
           gap: "2rem",
         }}
       >
-        {dieta.length == 0 ? (
+        {dieta?.length == 0 ? (
           <h5>No tienes un plan</h5>
         ) : (
           dieta?.comidas?.map((comida, index) => (
