@@ -4,6 +4,7 @@ import { CategoryScale, Chart, Legend, LinearScale, LineElement, PointElement, T
 import moment from 'moment'
 import 'moment/dist/locale/es';
 import axios from "axios";
+import {getUserData} from '../../../utility/Utils'
 
 
 export default function GraficoEvolucionIMC(){
@@ -13,10 +14,11 @@ export default function GraficoEvolucionIMC(){
     const [labelDates, setLabelDates] = useState([]);
     const [labelData, setLabelData] = useState([]);
     moment.locale("es")
+    const user = getUserData()
 
     useEffect(() => {
         async function fetchData() {
-            await axios.get("https://dietservice.bitjoins.pe/api/evolucion/6616").
+            await axios.get(`https://dietservice.bitjoins.pe/api/evolucion/${user.id}`).
             then((res) => {setEvolucion(res.data.data); console.log(res.data.data)});
         }
         fetchData();

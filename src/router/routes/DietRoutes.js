@@ -3,6 +3,7 @@ import { lazy } from 'react'
 const Dashboard = lazy(() => import('../../views/diet/dashboard'))
 const Evolucion = lazy(() => import('../../views/diet/evolucion'))
 const PlanAlimentacion = lazy(() => import('../../views/diet/plan-alimentacion'))
+const PlanPorId = lazy(() => import('../../views/diet/plan-alimentacion/PlanPorId'))
 const ListaIntercambio = lazy(() => import('../../views/diet/lista-intercambio'))
 const FueraDeCasa = lazy(() => import('../../views/diet/fuera-de-casa'))
 const Recetario = lazy(() => import('../../views/diet/recetario'))
@@ -20,6 +21,10 @@ const DietRoutes = [
   {
     path: '/plan-alimentacion',
     element: <PlanAlimentacion />
+  },
+  {
+    path: '/plan-alimentacion/:plan',
+    element: <PlanPorId />
   },
   {
     path: '/lista-intercambio',

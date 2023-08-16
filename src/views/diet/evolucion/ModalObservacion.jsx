@@ -5,7 +5,7 @@ export default function ModalObservacion({modal, toggle, observacion}) {
     <Modal isOpen={modal} toggle={toggle}>
       <ModalHeader toggle={toggle}></ModalHeader>
       <ModalBody>
-        {observacion}
+        {observacion == "" ? 'No tienes observaciones' : observacion}
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" onClick={toggle}>

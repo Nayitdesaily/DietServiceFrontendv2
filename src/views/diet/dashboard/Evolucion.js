@@ -9,6 +9,7 @@ import 'moment/dist/locale/es';
 import "@styles/react/dashboard/dashboard-evolution.scss";
 import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
+import {getUserData} from '../../../utility/Utils'
 
 
 const Evolucion = ({ lastEvolution }) => {
@@ -18,6 +19,9 @@ const Evolucion = ({ lastEvolution }) => {
    const [labelData, setLabelData] = useState([]);
    
    moment.locale("es")
+
+   const user = getUserData()
+   console.log(user)
 
    useEffect(() => {
       setLabelData([]);
@@ -31,10 +35,9 @@ const Evolucion = ({ lastEvolution }) => {
 
    useEffect(() => {
       async function fetchData() {
-        await axios.get("https://dietservice.bitjoins.pe/api/evolucion/6616").then((res) => {
+        await axios.get(`https://dietservice.bitjoins.pe/api/evolucion/${user.id}`).then((res) => {
           setEvolutions(res.data.data);
         });
-        setPending(false);
       }
       fetchData();
     }, []);

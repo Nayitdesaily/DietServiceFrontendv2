@@ -1,6 +1,5 @@
-import Dieta from "./Dieta";
 import mock from "../../../@fake-db/mock";
-
+import Planes from "./Planes";
 
 export default function PlanAlimentacion() {
 
@@ -9,6 +8,7 @@ export default function PlanAlimentacion() {
     return  (
     <div>
         <h4>Plan Alimentacion</h4>
-        <Dieta />
+        <br />
+        <Planes />
     </div>)
 }
