@@ -13,7 +13,7 @@ mock.restore()
         <Fragment>
             <div>
                 <h4>Evolucion Tratamiento Nutricional</h4>
-                <TablaEvolucion />
+                <TablaEvolucion/>
                 <GraficoEvolucionPeso />
                 <br />
                 <GraficoEvolucionIMC />

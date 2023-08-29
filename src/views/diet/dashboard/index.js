@@ -3,6 +3,7 @@ import Evolucion from "./Evolucion";
 import PlanDia from "./PlanDia";
 import mock from "../../../@fake-db/mock";
 import axios from "axios";
+import { getUserData } from "../../../utility/Utils";
 
 
 const Dashboard = () => {
@@ -10,6 +11,8 @@ const Dashboard = () => {
 
    const [evolution, setEvolution] = useState([])
    const [lastEvolution, setLastEvolution] = useState({});
+
+   const user = getUserData();
 
    useEffect( () => {
       if(evolution.length > 0) {
@@ -27,10 +30,9 @@ const Dashboard = () => {
 
    useEffect(() => {
       async function fetchData() {
-        await axios.get("https://dietservice.bitjoins.pe/api/evolucion/6616").then((res) => {
+        await axios.get(`https://dietservice.bitjoins.pe/api/evolucion/${user?.id}`).then((res) => {
           setEvolution(res.data.data);
         });
-        setPending(false);
       }
       fetchData();
     }, []);

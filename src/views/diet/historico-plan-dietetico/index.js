@@ -17,14 +17,13 @@ export default function HistoricoPlanDietetico({ direction }) {
   const [tab, setTab] = useState("historico");
   const [planAlimentacion, setPlanAlimentacion] = useState([]);
   const [pending, setPending] = useState(true);
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-
   const [filaSeleccionada, setFilaSeleccionada] = useState({})
-
   const [modal, setModal] = useState(false);
   const toggleModalPlan = () => setModal(!modal);
+  const [editarCopiar, setEditarCopiar] = useState("")
+
 
   const toggleDropdown = (row) => {
     if (selectedRow === row) {
@@ -56,8 +55,8 @@ export default function HistoricoPlanDietetico({ direction }) {
             <DropdownToggle caret>Opciones</DropdownToggle>
             <DropdownMenu>
               <DropdownItem>Detalle</DropdownItem>
-              <DropdownItem onClick={toggleModalPlan}>Editar</DropdownItem>
-              <DropdownItem onClick={() => {toggleModalPlan(); setFilaSeleccionada(row)}}>Copiar</DropdownItem>
+              <DropdownItem onClick={() => {toggleModalPlan(); setEditarCopiar("Editar"); setFilaSeleccionada(row)}}>Editar</DropdownItem>
+              <DropdownItem onClick={() => {toggleModalPlan(); setFilaSeleccionada(row); setEditarCopiar("Copiar")}}>Copiar</DropdownItem>
             </DropdownMenu>
           </Dropdown>
       ),
@@ -137,7 +136,7 @@ export default function HistoricoPlanDietetico({ direction }) {
               progressPending={pending}
               progressComponent={<Spinner>Loading...</Spinner>}
             />
-            <ModalPlan modal={modal} toggle={toggleModalPlan} filaSeleccionada={filaSeleccionada} setFilaSeleccionada={setFilaSeleccionada}/>
+            <ModalPlan modal={modal} toggle={toggleModalPlan} filaSeleccionada={filaSeleccionada} setFilaSeleccionada={setFilaSeleccionada} editarCopiar={editarCopiar}/>
           </TabPanel>
 
           <TabPanel value="plan"></TabPanel>

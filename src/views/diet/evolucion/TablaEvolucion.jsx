@@ -5,6 +5,7 @@ import { Edit, Trash } from "react-feather";
 import { Button, Spinner } from "reactstrap";
 import ModalObservacion from "./ModalObservacion";
 import {getUserData} from '../../../utility/Utils'
+import { height } from "@mui/system";
 
 export default function TablaEvolucion() {
   const [evolucion, setEvolucion] = useState([]);
@@ -110,6 +111,8 @@ export default function TablaEvolucion() {
     },
   ];
 
+
+
   return (
     <div>
       <div>
@@ -120,6 +123,7 @@ export default function TablaEvolucion() {
           noDataComponent={"No hay data"}
           progressPending={pending}
           progressComponent={<Spinner>Loading...</Spinner>}
+          fixedHeader={true}
         />
       </div>
       <ModalObservacion modal={modal} toggle={toggle} observacion={observacion} />

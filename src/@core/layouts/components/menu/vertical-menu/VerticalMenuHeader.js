@@ -53,7 +53,7 @@ const VerticalMenuHeader = props => {
           <NavLink to={user ? getHomeRouteForLoggedInUser(user.role) : '/'} className='navbar-brand'>
             <span className='brand-logo'>
               {/* <img src={themeConfig.app.appLogoImage} alt='logo' /> */}
-              <img src="https://dietservice.pe/wp-content/uploads/2019/10/logo-diet-service.png" alt='logo' />
+              <img src="https://dietservice.pe/wp-content/uploads/2019/12/isotipo.png" alt='logo' />
             </span>
             <h2 className='brand-text mb-0'>{themeConfig.app.appName}</h2>
           </NavLink>

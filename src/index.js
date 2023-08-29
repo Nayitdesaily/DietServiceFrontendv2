@@ -1,7 +1,7 @@
 // ** React Imports
 import { Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter as BrowserRouter } from 'react-router-dom'
 
 // ** Redux Imports
 import { store } from './redux/store'

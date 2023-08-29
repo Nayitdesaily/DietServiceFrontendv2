@@ -1,17 +1,112 @@
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row, FormGroup, Label, Input, Col } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, Row, FormGroup, Label, Input, Col } from "reactstrap";
 import { Controller, useForm } from "react-hook-form";
 import ModalPlanSeccionTab from "./ModalPlanSeccionTab";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSeleccionada }) {
+export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSeleccionada, editarCopiar }) {
   const { handleSubmit, control, reset } = useForm({});
   const [dietas, setDietas] = useState([]);
+  const [recomendaciones, setRecomendaciones] = useState([]);
+  const [ejercicios, setEjercicios] = useState([]);
   const [nutricionistas, setNutricionistas] = useState([]);
-  
-  function Submit(data) {
-    console.log(data);
-    console.log(dietas);
+  const [usuarios, setUsuarios] = useState([]);
+  const [patologia, setPatologia] = useState([]);
+
+  async function Submit(data) {
+    if (editarCopiar == "Copiar") {
+      await axios.post("https://dietservice.bitjoins.pe/api/plan_alimentacion/create_web", data).then((res) => {
+        if ((res.status = 200)) {
+          console.log(res)
+          const planAlimentacionId = res?.data?.data?.id;
+          dietas.map((dieta) => {
+            dieta.map((comida) => {
+              comida.planalimentacion_id = planAlimentacionId.toString();
+              axios.post("https://dietservice.bitjoins.pe/api/dieta/create", comida).then((res) => console.log(res));
+            });
+          });
+          recomendaciones.map((recomendacion) => {
+            recomendacion.planalimentacion_id = planAlimentacionId.toString();
+            axios.post("https://dietservice.bitjoins.pe/api/recomendaciones/create", recomendacion).then((res) => console.log(res));
+          })
+          ejercicios.map((ejercicio) => {
+            ejercicio.planalimentacion_id = planAlimentacionId.toString();
+            axios.post("http://localhost:8000/api/ejercicios/create", ejercicio).then((res) => console.log(res));
+          })
+          patologia?.map((patologia) => {
+            patologia.planalimentacion_id = planAlimentacionId.toString();
+            axios
+              .post(`http://localhost:8000/api/crear-patologia-web`, patologia)
+              .then((res) => {
+                console.log(res);
+              });
+          });
+        }
+      });
+    }
+
+    if (editarCopiar == "Editar") {
+      await axios
+        .put(`http://localhost:8000/api/plan_alimentacion/actualizar/${filaSeleccionada?.planalimentacion_id}`, data)
+        .then((res) => {
+          if ((res.status = 200)) {
+            console.log(res.data);
+            const planAlimentacionId = filaSeleccionada?.planalimentacion_id;
+            dietas.map((dieta) => {
+              dieta.map((comida) => {
+                comida.planalimentacion_id = planAlimentacionId.toString();
+                if (comida?.id !== "") {
+                  axios
+                    .put(`http://localhost:8000/api/dieta/actualizar/${comida?.id}`, comida)
+                    .then((res) => console.log(res.data.message));
+                } else {
+                  axios
+                    .post("https://dietservice.bitjoins.pe/api/dieta/create", comida)
+                    .then((res) => console.log(res.data.message));
+                }
+              });
+            });
+
+            recomendaciones.map((recomendacion) => {
+              recomendacion.planalimentacion_id = planAlimentacionId.toString();
+              if (recomendacion?.id != "") {
+                axios
+                  .put(`http://localhost:8000/api/recomendaciones/actualizar/${recomendacion?.id}`, recomendacion)
+                  .then((res) => console.log(res.data));
+              } else {
+                axios
+                  .post("https://dietservice.bitjoins.pe/api/recomendaciones/create", recomendacion)
+                  .then((res) => console.log(res.data.message));
+              }
+            });
+
+            ejercicios.map((ejercicio) => {
+              ejercicio.planalimentacion_id = planAlimentacionId.toString();
+              if (ejercicio?.id != "") {
+                axios
+                  .put(`http://localhost:8000/api/ejercicios/actualizar/${ejercicio?.id}`, ejercicio)
+                  .then((res) => console.log(res.data.message));
+              } else {
+                axios.post("http://localhost:8000/api/ejercicios/create", ejercicio).then((res) => console.log(res.data.message));
+              }
+            });
+
+            patologia?.map((patologia) => {
+              patologia.planalimentacion_id = planAlimentacionId.toString();
+              if(patologia.patologia_por_plan_id == '') {
+                axios
+                .post(`http://localhost:8000/api/crear-patologia-web`, patologia)
+                .then((res) => {
+                  console.log(res);
+                });
+              }
+              
+            });
+          }
+        });
+    }
+
+    toggle();
   }
 
   useEffect(() => {
@@ -19,19 +114,36 @@ export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSele
       await axios.get(`https://dietservice.bitjoins.pe/api/nutricionistas`).then((res) => {
         setNutricionistas(res.data);
       });
+      await axios.get(`https://dietservice.bitjoins.pe/api/usuarios-web`).then((res) => {
+        setUsuarios(res.data);
+      });
     }
     fetchData();
   }, []);
 
-  console.log(nutricionistas);
-  console.log(filaSeleccionada);
-
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle} fullscreen={true} scrollable={true}>
+      <Modal
+        isOpen={modal}
+        toggle={() => {
+          toggle();
+          setDietas([]);
+          setRecomendaciones([]);
+          setEjercicios([]);
+          setPatologia([]);
+          reset();
+          setFilaSeleccionada({});
+        }}
+        fullscreen={true}
+        scrollable={true}
+      >
         <ModalHeader
           toggle={() => {
             toggle();
+            setDietas([]);
+            setRecomendaciones([]);
+            setEjercicios([]);
+            setPatologia([]);
             reset();
             setFilaSeleccionada({});
           }}
@@ -42,7 +154,7 @@ export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSele
           <form onSubmit={handleSubmit(Submit)}>
             <Row>
               <Controller
-                name="fecha de inicio"
+                name="fecultimaact"
                 control={control}
                 render={({ field: { value, ...field } }) => (
                   <FormGroup>
@@ -55,7 +167,7 @@ export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSele
 
             <Row>
               <Controller
-                name="plan"
+                name="nombre"
                 control={control}
                 defaultValue={filaSeleccionada?.plan}
                 render={({ field }) => (
@@ -70,13 +182,29 @@ export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSele
             <Row>
               <Col>
                 <Controller
-                  name="cliente"
+                  name="usuario_id"
                   control={control}
-                  defaultValue={filaSeleccionada?.nutricionista_nombres}
-                  render={({ field }) => (
+                  defaultValue={filaSeleccionada?.usuario_id}
+                  render={({ field: { onChange, value } }) => (
                     <FormGroup>
                       <Label>Cliente</Label>
-                      <Input placeholder="Seleccione el cliente" type="text" {...field} />
+                      <Input
+                        placeholder="Seleccione el cliente"
+                        type="select"
+                        onChange={(e) => onChange(e.target.value)}
+                      >
+                        <option value={filaSeleccionada?.usuario_id}>
+                          {filaSeleccionada?.nombre} {filaSeleccionada?.apellido}
+                        </option>
+
+                        {usuarios
+                          ?.filter((usuario) => usuario.usuario_id != filaSeleccionada?.usuario_id)
+                          .map((usuario, index) => (
+                            <option key={index} value={usuario?.usuario_id}>
+                              {usuario?.nombre} {usuario?.apellido}
+                            </option>
+                          ))}
+                      </Input>
                     </FormGroup>
                   )}
                 />
@@ -84,7 +212,7 @@ export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSele
 
               <Col>
                 <Controller
-                  name="nutricionista"
+                  name="nutricionista_id"
                   control={control}
                   defaultValue={filaSeleccionada?.nutricionista_id}
                   render={({ field: { onChange, value } }) => (
@@ -141,7 +269,18 @@ export default function ModalPlan({ modal, toggle, filaSeleccionada, setFilaSele
               </Col>
             </Row>
 
-            <ModalPlanSeccionTab planSeleccionado={filaSeleccionada} dietas={dietas} setDietas={setDietas} />
+            <ModalPlanSeccionTab
+              planSeleccionado={filaSeleccionada}
+              dietas={dietas}
+              setDietas={setDietas}
+              recomendaciones={recomendaciones}
+              setRecomendaciones={setRecomendaciones}
+              ejercicios={ejercicios}
+              setEjercicios={setEjercicios}
+              patologia={patologia}
+              setPatologia={setPatologia}
+              editarCopiar={editarCopiar}
+            />
 
             <Button color="success" type="submit">
               Ok

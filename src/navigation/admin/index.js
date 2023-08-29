@@ -8,9 +8,9 @@
 // import dashboards from './dashboards'
 // import uiElements from './ui-elements'
 
-import { PieChart, Heart } from 'react-feather'
+import { PieChart, Heart, User } from 'react-feather'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAppleWhole, faPersonRunning, faUtensils, faClipboardList } from '@fortawesome/free-solid-svg-icons'
+import { faAppleWhole, faPersonRunning, faUtensils, faLeaf, faUtensilSpoon } from '@fortawesome/free-solid-svg-icons'
 
 
 // ** Merge & Export
@@ -19,14 +19,20 @@ export default [
     {
       id: 'cliente',
       title: 'Cliente',
-      icon: <PieChart size={20} />,
+      icon: <User size={20} />,
       navLink: '/clientes'
     },
     {
       id: 'historico-plan-dietetico',
       title: 'Historico Plan Dietetico',
-      icon: <PieChart size={20} />,
+      icon: <FontAwesomeIcon icon={faLeaf} />,
       navLink: '/historico-plan-dietetico'
+    },
+    {
+      id: 'fuera-de-casa-admin',
+      title: 'Fuera De Casa',
+      icon: <FontAwesomeIcon icon={faUtensilSpoon} />,
+      navLink: '/fuera-de-casa/admin'
     }
 ];
 

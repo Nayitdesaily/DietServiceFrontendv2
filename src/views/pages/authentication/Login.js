@@ -66,7 +66,7 @@ const ToastContent = ({ t, name, role }) => {
           <h6>{name}</h6>
           <X size={12} className="cursor-pointer" onClick={() => toast.dismiss(t.id)} />
         </div>
-        <span>Bienvenido {user.persona_id.nombre}, un gusto tener otra vez por aquí esperamos que tu experiencia sea la ¡mejor!</span>
+        <span>Bienvenido {(user && `${user?.persona_id?.nombre} ${user?.persona_id?.apellido}` ) || 'John Doe'}, un gusto tener otra vez por aquí esperamos que tu experiencia sea la ¡mejor!</span>
       </div>
     </div>
   );
@@ -325,9 +325,9 @@ const Login = () => {
                   <Label className="form-label" for="login-password">
                     Contraseña
                   </Label>
-                  <Link to="/forgot-password">
+                  {/* <Link to="/forgot-password">
                     <small>Olvidaste tu contraseña?</small>
-                  </Link>
+                  </Link> */}
                 </div>
                 <Controller
                   id="password"
@@ -349,15 +349,16 @@ const Login = () => {
                 {cargando ? <Spinner size='sm'>Loading...</Spinner> : null}
               </Button>
             </Form>
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               <span className="me-25">Eres nuevo?</span>
               <Link to="/register">
                 <span>Crea una cuenta</span>
               </Link>
-            </p>
-            <div className="divider my-2">
+            </p> */}
+            {/* <div className="divider my-2">
               <div className="divider-text">o</div>
-            </div>
+            </div> */}
+            <br />
             <div className="auth-footer-btn d-flex justify-content-center">
               <Button color="facebook">
                 <a href={'https://www.facebook.com/DietService/'} target="_blank" style={{color: 'white'}}>

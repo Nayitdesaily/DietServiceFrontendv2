@@ -24,13 +24,13 @@ export default [
     },
     {
       id: 'evolucion',
-      title: 'Evolucion',
+      title: 'Evolución',
       icon: <Heart size={20} />,
       navLink: '/evolucion'
     },
     {
       id: 'plan-alimentacion',
-      title: 'Plan Alimentacion',
+      title: 'Plan Alimentación',
       icon: <FontAwesomeIcon icon={faAppleWhole} />,   
       navLink: '/plan-alimentacion'
     },

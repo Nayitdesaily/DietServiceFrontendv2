@@ -24,13 +24,15 @@ export default function GraficoEvolucionPeso(){
         fetchData();
     }, []);
 
-   
     useEffect(() => {
         setLabelData([]);
         setLabelDates([]);
-        evolucion.map((date) => {
+        const evolutionsCopia = evolucion
+        evolutionsCopia.reverse()
+        
+        evolutionsCopia.slice(-12).map((date) => {
            setLabelDates(dates => 
-           [...dates, moment(date.fecha).format("MMM").charAt(0).toUpperCase().concat(moment(date.fecha).format("MMMM DD").slice(1))])  
+           [...dates, moment(date.fecha).format("MMM").charAt(0).toUpperCase().concat(moment(date.fecha).format("MMM DD YY").slice(1))])  
            setLabelData(data => [...data, date.peso])  
         });
     }, [evolucion]);

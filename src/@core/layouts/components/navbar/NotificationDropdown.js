@@ -167,17 +167,17 @@ const NotificationDropdown = () => {
         <li className='dropdown-menu-header'>
           <DropdownItem className='d-flex' tag='div' header>
             <h4 className='notification-title mb-0 me-auto'>Notifications</h4>
-            <Badge tag='div' color='light-primary' pill>
+            {/* <Badge tag='div' color='light-primary' pill>
               6 New
-            </Badge>
+            </Badge> */}
           </DropdownItem>
         </li>
-        {renderNotificationItems()}
-        <li className='dropdown-menu-footer'>
+        {/* {renderNotificationItems()} */}
+        {/* <li className='dropdown-menu-footer'>
           <Button color='primary' block>
             Read all notifications
           </Button>
-        </li>
+        </li> */}
       </DropdownMenu>
     </UncontrolledDropdown>
   )

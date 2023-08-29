@@ -4,11 +4,12 @@ import TabPanel from "@mui/lab/TabPanel/TabPanel";
 import { Tab } from "@mui/material";
 import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Card, CardBody, CardText, CardTitle } from "reactstrap";
+import { Link, useParams } from "react-router-dom";
+import { Button } from "reactstrap";
 
 export default function PlanPorId() {
   const [tab, setTab] = useState("1");
+  const [tabRecomendaciones, setTabRecomendaciones] = useState("1");
   const { plan } = useParams();
   const [dietas, setDietas] = useState([]);
   const [recomendaciones, setRecomendaciones] = useState([]);
@@ -17,29 +18,48 @@ export default function PlanPorId() {
     setTab(newValue);
   };
 
+  const handleChangeRecomendaciones = (event, newValue) => {
+    setTabRecomendaciones(newValue);
+  };
+
   useEffect(() => {
     axios
       .get(`https://dietservice.bitjoins.pe/api/plan-alimentacion/dietas/${plan}`)
       .then((res) => setDietas(res.data.data));
 
-    axios
-      .get(`https://dietservice.bitjoins.pe/api/recomendaciones/${plan}`)
-      .then((res) => 
-        {
-          if(Array.isArray(res.data.data) ){
-            setRecomendaciones(res.data.data)
-          } else {
-            setRecomendaciones([res.data.data])
-          }
-          
-        }
-      );
+    axios.get(`https://dietservice.bitjoins.pe/api/recomendaciones-web/${plan}`).then((res) => {
+      if (Array.isArray(res.data)) {
+        setRecomendaciones(res.data);
+      } else {
+        setRecomendaciones([res.data]);
+      }
+    });
   }, [plan]);
 
-  console.log(recomendaciones);
+  useEffect(() => {
+    setTabRecomendaciones(recomendaciones?.[0]?.tipo)
+  }, [recomendaciones])
+
+  function RecomendacionSaltoLinea(texto) {
+    const lineas = texto.split('\n');
+
+    const lineasFiltradas = lineas.filter((linea) => linea.trim() !== '.');
+
+    const elementosDeParrafo = lineasFiltradas.map((linea, index) => (
+    <p key={index}>{linea}</p>
+    ));
+    return elementosDeParrafo
+  }
 
   return (
     <Fragment>
+      <Link to={`/plan-alimentacion`} style={{color: 'white',position: 'fixed', right: '2rem', zIndex: 999 }}>
+        <Button color="warning">
+          Regresar
+        </Button>
+      </Link>
+      
+      
       <TabContext value={tab}>
         <TabList onChange={handleChange} aria-label="simple tabs example">
           {dietas.map((dieta, index) => (
@@ -98,24 +118,35 @@ export default function PlanPorId() {
                 </li>
               ))}
             </ul>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem" }}>
-              {recomendaciones?.map((recomendacion, index) => (
-                <Card
-                  className="my-2"
-                  style={{
-                    width: "24rem",
-                    minHeight: "20rem",
-                  }}
-                >
-                  <CardBody>
-                    <CardTitle tag="h5" style={{ fontWeight: "bold" }}>
-                      {recomendacion.tipo == 1 ? 'Pautas Generales' : recomendacion.tipo == 2 ? 'Alimentos Permitidos' : recomendacion.tipo == 3 ? 'Prohibidos (Consumo Mensual)' : recomendacion.tipo == 4 ? 'No Olvida' : null}
-                    </CardTitle>
-                    <CardText>{recomendacion.recomendacion}</CardText>
-                  </CardBody>
-                </Card>
-              ))}
-            </div>
+            <Fragment>
+              <TabContext value={tabRecomendaciones}>
+                <TabList onChange={handleChangeRecomendaciones} aria-label="simple tabs example">
+                  {recomendaciones?.map((recomendacion, index) => (
+                    <Tab
+                      key={index}
+                      value={recomendacion?.tipo}
+                      label={
+                        recomendacion?.tipo == 1
+                          ? "Pautas Generales"
+                          : recomendacion?.tipo == 2
+                          ? "Alimentos Permitidos"
+                          : recomendacion?.tipo == 3
+                          ? "Prohibidos (Consumo Mensual)"
+                          : recomendacion?.tipo == 4
+                          ? "No Olvida"
+                          : null
+                      }
+                    />
+                  ))}
+                </TabList>
+
+                {recomendaciones?.map((recomendacion, index) => (
+                  <TabPanel key={index} value={recomendacion?.tipo}>
+                    {RecomendacionSaltoLinea(recomendacion?.recomendacion)}
+                  </TabPanel>
+                ))}
+              </TabContext>
+            </Fragment>
           </TabPanel>
         ))}
       </TabContext>
